@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -30,6 +31,18 @@ def create_app() -> FastAPI:
             data=None
         )
         return JSONResponse(status_code=exc.status_code, content=body.model_dump())
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(
+        request: Request, exc: RequestValidationError
+    ):
+        body = ApiResponse(
+            success=False,
+            statusCode=422,
+            message="Error de validación en los datos enviados",
+            data=exc.errors(),
+        )
+        return JSONResponse(status_code=422, content=body.model_dump())
 
     app.include_router(students_router)
     app.include_router(pets_router)
