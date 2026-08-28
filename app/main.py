@@ -24,11 +24,9 @@ def create_app() -> FastAPI:
 
     @app.exception_handler(HTTPException)
     async def http_exception_handler(request: Request, exc: HTTPException):
-        body = ApiResponse[None](
-            success=False,
-            statusCode=exc.status_code,
+        body = ApiResponse.error(
+            status_code=exc.status_code,
             message=str(exc.detail),
-            data=None
         )
         return JSONResponse(status_code=exc.status_code, content=body.model_dump())
 
@@ -36,9 +34,8 @@ def create_app() -> FastAPI:
     async def validation_exception_handler(
         request: Request, exc: RequestValidationError
     ):
-        body = ApiResponse(
-            success=False,
-            statusCode=422,
+        body = ApiResponse.error(
+            status_code=422,
             message="Error de validación en los datos enviados",
             data=exc.errors(),
         )

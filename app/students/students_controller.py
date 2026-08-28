@@ -10,9 +10,8 @@ router = APIRouter(prefix="/api/students", tags=["Students"])
 @router.get("", response_model=ApiResponse[list[Student]])
 def find_all() -> ApiResponse[list[Student]]:
     data = students_service.find_all()
-    return ApiResponse(
-        success=True,
-        statusCode=200,
+    return ApiResponse.ok(
+        status_code=200,
         message="Lista de estudiantes obtenida exitosamente",
         data=data,
     )
@@ -21,9 +20,8 @@ def find_all() -> ApiResponse[list[Student]]:
 @router.get("/{student_id}", response_model=ApiResponse[Student])
 def find_by_id(student_id: str) -> ApiResponse[Student]:
     data = students_service.find_by_id(student_id)
-    return ApiResponse(
-        success=True,
-        statusCode=200,
+    return ApiResponse.ok(
+        status_code=200,
         message="Estudiante obtenido exitosamente",
         data=data,
     )
@@ -32,9 +30,8 @@ def find_by_id(student_id: str) -> ApiResponse[Student]:
 @router.post("", response_model=ApiResponse[Student], status_code=201)
 def create(body: CreateStudentDto) -> ApiResponse[Student]:
     data = students_service.create(body)
-    return ApiResponse(
-        success=True,
-        statusCode=201,
+    return ApiResponse.ok(
+        status_code=201,
         message="Estudiante creado exitosamente",
         data=data,
     )
@@ -43,9 +40,8 @@ def create(body: CreateStudentDto) -> ApiResponse[Student]:
 @router.patch("/{student_id}", response_model=ApiResponse[Student])
 def update(student_id: str, body: UpdateStudentDto) -> ApiResponse[Student]:
     data = students_service.update(student_id, body)
-    return ApiResponse(
-        success=True,
-        statusCode=200,
+    return ApiResponse.ok(
+        status_code=200,
         message="Estudiante actualizado exitosamente",
         data=data,
     )
@@ -55,9 +51,8 @@ def update(student_id: str, body: UpdateStudentDto) -> ApiResponse[Student]:
 def delete(student_id: str) -> ApiResponse[Student]:
     deleted = students_service.delete(student_id)
     pets_service.delete_all_for_student(student_id)
-    return ApiResponse(
-        success=True,
-        statusCode=200,
+    return ApiResponse.ok(
+        status_code=200,
         message="Estudiante eliminado exitosamente",
         data=deleted,
     )

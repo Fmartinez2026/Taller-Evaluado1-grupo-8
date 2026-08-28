@@ -27,7 +27,43 @@ Cada estudiante tiene `id` (UUID), `name`, `email`, `age`, `createdAt` y `update
 
 Cada mascota tiene `id` (UUID), `studentId`, `name`, `species`, `age` (opcional), `createdAt` y `updatedAt`. Solo puede operar sobre su estudiante dueño.
 
-Las respuestas devuelven los datos crudos, sin envoltorios. Los errores de validación usan el formato nativo de FastAPI (`422`) y las excepciones HTTP los códigos estándar (`404`, `409`).
+## Estándar de respuestas HTTP JSON
+
+Todos los endpoints, tanto en respuestas exitosas como en errores controlables,
+utilizan el tipo genérico `ApiResponse[T]`. El campo `data` puede representar un
+objeto individual, una lista de objetos o información adicional de un error.
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| `success` | `boolean` | Indica si la petición se procesó correctamente. |
+| `statusCode` | `number` | Código de estado HTTP de la respuesta. |
+| `message` | `string` | Mensaje legible que describe el resultado. |
+| `data` | `T \| null` | Recurso, lista de recursos o detalles del error. |
+
+Ejemplo de éxito (`201 Created`):
+
+```json
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "Estudiante creado exitosamente",
+  "data": {
+    "id": "uuid-del-estudiante",
+    "name": "Ada Lovelace"
+  }
+}
+```
+
+Ejemplo de error (`404 Not Found`):
+
+```json
+{
+  "success": false,
+  "statusCode": 404,
+  "message": "Estudiante no encontrado",
+  "data": null
+}
+```
 
 ## Contexto técnico
 
