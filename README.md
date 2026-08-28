@@ -27,7 +27,35 @@ Cada estudiante tiene `id` (UUID), `name`, `email`, `age`, `createdAt` y `update
 
 Cada mascota tiene `id` (UUID), `studentId`, `name`, `species`, `age` (opcional), `createdAt` y `updatedAt`. Solo puede operar sobre su estudiante dueño.
 
-Las respuestas devuelven los datos crudos, sin envoltorios. Los errores de validación usan el formato nativo de FastAPI (`422`) y las excepciones HTTP los códigos estándar (`404`, `409`).
+## Formato de respuestas
+
+Para que todos los endpoints respondan de la misma forma, usamos `ApiResponse`.
+
+Cada respuesta incluye:
+
+- `success`: indica si la operación resulto o no
+- `statusCode`: codigo HTTP de la respuesta dada
+- `message`: mensaje que explica el resultado que nos dio
+- `data`: información solicitada, puede ser un objeto, una lista o `null` si corresponde
+
+Ejemplo de una respuesta correcta seria:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Estudiantes obtenidos correctamente",
+  "data": []
+}
+
+Un ejemplo se error seria:
+{
+  "success": false,
+  "statusCode": 404,
+  "message": "Estudiante no encontrado",
+  "data": null
+}
+
 
 ## Contexto técnico
 
