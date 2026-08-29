@@ -1,13 +1,13 @@
-# CRUD Students & Pets (FastAPI)
+# CRUD Students & Pets (FastAPI).
 
 Proyecto FastAPI que implementa un **CRUD en memoria** para la entidad `Student` y sus mascotas (`Pet`). No requiere base de datos ni contenedores: los datos viven en un diccionario dentro del servicio y se pierden al reiniciar la aplicación.
 
-## Requerimientos
+## Requerimientos.
 
 - Python 3.13+ (gestionado automáticamente por [uv](https://docs.astral.sh/uv/))
 - uv
 
-## Resumen funcional
+## Resumen funcional.
 
 La API expone operaciones CRUD completas:
 
@@ -65,7 +65,7 @@ Un ejemplo se error seria:
 - **Gestor de dependencias**: uv
 - **Documentación**: Swagger en `/docs`
 
-## Ejecución local
+## Ejecución local.
 
 1. Instalar dependencias:
 
@@ -96,7 +96,8 @@ La aplicación queda disponible en:
 - `http://localhost:3000`
 - `http://localhost:3000/docs`
 
-## Comandos útiles
+## Comandos útiles.
+
 
 - `make install` — sincroniza dependencias con uv
 - `make dev` — arranca uvicorn en modo reload
